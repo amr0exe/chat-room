@@ -7,6 +7,6 @@ const wss = new WebSocketServer({ server })
 
 
 wss.on('connection', handleConnection)
-server.listen(8070, () => {
+server.listen(8070, '0.0.0.0', () => {
     console.log("server running on 8080:")
 })
