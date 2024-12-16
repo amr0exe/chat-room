@@ -1,12 +1,17 @@
-import { WebSocketServer } from "ws";
-import http from "http"
-import { handleConnection } from "./handlers/connectionHandler.js";
+import express from "express"
+import { WebSocketServer } from "ws"
+import { handleConnection } from "./handlers/connectionHandler.js"
 
-const server = http.createServer()
+const app = express()
+
+const server = app.listen(8080, "0.0.0.0", () => {
+    console.log("Server running on port 8080")
+});
+
 const wss = new WebSocketServer({ server })
 
+wss.on("connection", handleConnection)
 
-wss.on('connection', handleConnection)
-server.listen(8070, '0.0.0.0', () => {
-    console.log("server running on 8080:")
+app.get("/", (req, res) => {
+    res.send("WebSocket server is running!")
 })
